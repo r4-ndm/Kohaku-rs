@@ -1,0 +1,25 @@
+[package]
+name = "kohaku-cli"
+description = "CLI demo wallet for the community Kohaku Rust SDK (blueprint: kassandraoftroy/kohaku-cli)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+keywords = ["ethereum", "privacy", "wallet", "cli"]
+categories.workspace = true
+
+[[bin]]
+name = "kohaku"
+path = "src/main.rs"
+
+[dependencies]
+kohaku-core = { workspace = true }
+kohaku-stealth = { workspace = true }
+clap = { version = "4", features = ["derive"] }
+thiserror = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }

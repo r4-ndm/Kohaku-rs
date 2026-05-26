@@ -1,0 +1,41 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/kohaku-core",
+    "crates/kohaku-stealth",
+    "crates/kohaku-railgun",
+    "crates/kohaku-p2p",
+    "crates/kohaku-cli",
+]
+
+[workspace.package]
+version = "0.0.0"
+edition = "2021"
+rust-version = "1.75"
+license = "MIT"
+repository = "https://github.com/r4-ndm/Kohaku-rs"
+homepage = "https://github.com/r4-ndm/Kohaku-rs"
+authors = ["kohaku-rs contributors"]
+keywords = ["ethereum", "privacy", "wallet", "kohaku", "railgun"]
+categories = ["cryptography", "web-programming"]
+
+[workspace.dependencies]
+alloy-primitives = "1"
+async-trait = "0.1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+thiserror = "2"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "sync"] }
+tracing = "0.1"
+
+kohaku-core = { path = "crates/kohaku-core", version = "0.0.0" }
+kohaku-stealth = { path = "crates/kohaku-stealth", version = "0.0.0" }
+kohaku-railgun = { path = "crates/kohaku-railgun", version = "0.0.0" }
+kohaku-p2p = { path = "crates/kohaku-p2p", version = "0.0.0" }
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = "warn"
+pedantic = "warn"

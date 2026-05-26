@@ -1,0 +1,19 @@
+[package]
+name = "kohaku-stealth"
+description = "ERC-5564 stealth address primitives for Kohaku-compatible wallets"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+keywords = ["ethereum", "privacy", "stealth", "erc-5564"]
+categories.workspace = true
+
+[dependencies]
+kohaku-core = { workspace = true }
+thiserror = { workspace = true }
+
+# Phase 1: thin wrapper; swap for audited implementation before 1.0.
+eth-stealth-addresses = "0.1"

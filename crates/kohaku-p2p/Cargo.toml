@@ -1,0 +1,18 @@
+[package]
+name = "kohaku-p2p"
+description = "Peer-to-peer private transaction broadcasting for Kohaku wallets"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+keywords = ["ethereum", "privacy", "p2p", "mempool"]
+categories.workspace = true
+
+[dependencies]
+kohaku-core = { workspace = true }
+async-trait = { workspace = true }
+thiserror = { workspace = true }
+tokio = { workspace = true }
