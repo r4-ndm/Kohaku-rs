@@ -9,7 +9,7 @@ members = [
 ]
 
 [workspace.package]
-version = "0.0.0"
+version = "0.1.0"
 edition = "2021"
 rust-version = "1.75"
 license = "MIT"
@@ -86,10 +86,10 @@ railgun = { path = ".upstream-cache/kohaku/crates/railgun" }
 userop-kit = { path = ".upstream-cache/kohaku/crates/userop-kit" }
 userop-kit-ts = { path = ".upstream-cache/kohaku/crates/userop-kit-ts" }
 
-kohaku-core = { path = "crates/kohaku-core", version = "0.0.0" }
-kohaku-stealth = { path = "crates/kohaku-stealth", version = "0.0.0" }
-kohaku-railgun = { path = "crates/kohaku-railgun", version = "0.0.0" }
-kohaku-p2p = { path = "crates/kohaku-p2p", version = "0.0.0" }
+kohaku-core = { path = "crates/kohaku-core", version = "0.1.0" }
+kohaku-stealth = { path = "crates/kohaku-stealth", version = "0.1.0" }
+kohaku-railgun = { path = "crates/kohaku-railgun", version = "0.1.0" }
+kohaku-p2p = { path = "crates/kohaku-p2p", version = "0.1.0" }
 
 [workspace.lints.rust]
 unsafe_code = "forbid"
