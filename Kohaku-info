@@ -1,0 +1,69 @@
+Kohaku Roadmap
+Kohaku is a set of primitives that provides wallets with security and privacy. Kohaku’s core goals are :
+
+an SDK that exposes strong privacy/security primitives
+a power‑user-oriented reference implementation wallet that ships on top of that SDK to showcase these features;
+collaborations with other wallets to implement the SDK either in full or in parts that they care about
+To kickstart the effort, the project is focusing on privacy features and a browser extension that demonstrates the power of these features and targets power users. This reference implementation will not be a consumer oriented product. The browser extension is a fork of Ambire. Development on both the wallet and the SDK will be mainnet first, and progressively add support for Layer 2s. We will focus on layer 2s that are at least stage 1 and committed to reach stage 2 and add fast withdrawals. The reference implementation and the SDK will come with a plugin system that developers will enable themselves. This way wallet teams will be able to select the features they want to propose to their users. In the future new privacy protocols could be added to the plugin list. We will progressively enable more private interactions within DeFi protocols.
+
+Features
+In a first phase we will be working on a set of features enabling privacy and security improvements. Here is a non exhaustive list of features that we would like to achieve:
+
+Running Helios lightclient in the browser extension (thanks to the Helios wasm package) with fallback on a RPC if needed and allowed by a killswitch. This removes the need to trust RPC providers for validity
+A minimal execution client running in the browser allowing to run necessary actions privately. We want to be able to run eth_call interacting with an oblivious server to read state while making sure that the server doesn't know which storage is being touched. (achieved with TEE+ORAM, with a longer-term project to try to be purely cryptographic with PIR)
+Private sends through the wallet send flow via various privacy protocols
+Private receive through the wallet flow via various privacy protocols
+Private payment requests through the wallet via various privacy protocols
+Aggregated view of your balances accross all enabled privacy protocols
+Preventing unecessary IP leakage and hiding traffic
+Transparent support of private addresses : RPC hijack if the dApps forces an internal RPC with support of asset wallet discovery via ERC 7811
+One account per dApp. When connecting to a dApp the default behavior is to prompt to use a new address
+A wallet connection kit that is a privacy-first protocol for peer-to-peer JSON-RPC connectivity
+Social recovery options through ZKemail, ZKpassport, Anon adhar, with standardized maximally-intermediary-free implementations to ensure passing the walkaway test, with sped up proving times
+Post-Quantum killswitch with an option to enable Post-Quantum accounts with optimized Falcon / Dilithium solidity verifiers
+A universal ethereum-app for hardware that supports advanced features. Providing a reference implementation of the Ethereum application that can be used immediately by different manufacturers, blowing up the existing vendor lock
+ZK hardware signer (Jubjub / Bandersnatch) to allow hardware to be used with existing Privacy protocols
+Spending policies account policies with spending limits for different signers
+Optional P2P transactions, broadcasting transactions directly through the p2p network without going through RPC nodes
+Future directions we are exploring
+We believe that the wallet should be as close as possible to the silicon / kernel and to do so creating a native ethereum browser is the logical path to pursue. This lets us do more powerful things to ensure the security of dApp interfaces, such as IPFS dApp UIs, security-focused frontend DSLs, and deeper p2p integration.
+
+Develop transaction security scoring through local AI to help identify low-risk vs high-risk transactions without leaking private information.
+
+We will also explore new social recovery schemes for private data. (eg. privacy wallet secrets, zk poaps)
+
+To achieve a secure and private wallet we need the ethereum network to implement native account abstraction. We will be working in that direction over 2026.
+
+Bringing privacy-preserving account abstraction, which requires client-side ZK-EVM (or perhaps ZK-RISC-V) proving that you control a given wallet. This lets you have the same wallet control public and private funds.
+
+Collaborations
+This initiative is a collective effort from various teams & individuals that are helping to shape and code this project:
+
+Ambire : https://github.com/AmbireTech/extension
+Wonderland https://github.com/defi-wonderland
+Railgun https://github.com/railgun-privacy
+Helios https://github.com/a16z/helios
+PSE https://ethereum-magicians.org/t/pse-roadmap-2025-and-beyond/25423
+Oblivious labs https://www.obliviouslabs.com/
+ZKnox https://github.com/zknoxhq
+KZG https://github.com/kassandraoftroy
+Luc https://github.com/lucemans
+Fredrik https://github.com/fredrik0x
+Igor https://github.com/igorbarinov
+Samczsun https://github.com/samczsun
+Pcaversaccio https://github.com/pcaversaccio
+Micah Zoltu https://github.com/MicahZoltu
+We would like to thank them all for being who they are.
+
+We also expect to collaborate with the Walletbeat team (who is also looking for contributors!) : https://github.com/walletbeat
+
+website :https://beta.walletbeat.eth.limo/wallet/summary/
+
+We are open to contributions, feel free to kickstart the discussion by opening a PR at :
+
+https://github.com/ethereum/kohaku
+https://github.com/ethereum/kohaku-extension
+https://github.com/ethereum/kohaku-commons
+
+We will be publishing descriptions of the challenges that we face so anyone can take them.
+We seek your questions and your concerns and hope we may engage you so that we do not deceive ourselves. We will not, however, be moved out of our course because some may disagree with our goals.

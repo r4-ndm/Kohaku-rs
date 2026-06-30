@@ -15,6 +15,14 @@ categories.workspace = true
 kohaku-core = { workspace = true }
 async-trait = { workspace = true }
 thiserror = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+alloy-primitives = { workspace = true }
+alloy = { version = "1.8", default-features = false, features = ["json", "rpc"] }
+hex = "0.4"
+rand = { workspace = true }
+tokio = { workspace = true }
+eip-1193-provider = { git = "https://github.com/r4-ndm/kohaku.git", branch = "send-sync" }
 
 # Track upstream EF Rust implementation (not yet published to crates.io).
-# railgun = { git = "https://github.com/ethereum/kohaku", branch = "master" }
+railgun = { git = "https://github.com/r4-ndm/kohaku.git", branch = "send-sync" }
