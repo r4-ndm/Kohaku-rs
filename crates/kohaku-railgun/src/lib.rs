@@ -31,6 +31,15 @@ use eip_1193_provider::provider::{Eip1193Provider, Eip1193Error, RawLog};
 use rand::SeedableRng;
 use rand::rngs::StdRng;
 
+// Compile-time regression guard: the `send-sync` fork's `MaybeSend` bounds make
+// `RailgunProvider` thread-safe on native. If a future upstream sync drops those
+// bounds, this fails to compile and the integration needs attention.
+#[cfg(not(target_arch = "wasm32"))]
+const _: fn() = || {
+    fn assert_send_sync<T: Send + Sync>() {}
+    assert_send_sync::<RailgunProvider>();
+};
+
 /// Database adapter that routes calls to `kohaku_core::Storage`.
 pub struct StorageDatabase {
     storage: Arc<dyn Storage>,
@@ -228,45 +237,6 @@ impl Eip1193Provider for ProviderAdapter {
     }
 }
 
-/// Thread-safe wrapper around `RailgunProvider`.
-pub struct SendSyncProvider(pub RailgunProvider);
-
-// SAFETY: `RailgunProvider` is functionally thread-safe on native platforms (containing
-// read-only key material and thread-safe channels/state). However, because the upstream
-// `RailgunSigner` trait object does not enforce `Send + Sync` bounds, the compiler cannot
-// auto-derive these bounds for `RailgunProvider`. This is a temporary bridge until the
-// upstream `MaybeSend` patch is merged in the official repository.
-unsafe impl Send for SendSyncProvider {}
-// SAFETY: Same as above. The inner structures utilize concurrent-safe types and are accessed
-// read-only across async bounds.
-unsafe impl Sync for SendSyncProvider {}
-
-impl SendSyncProvider {
-    pub async fn sync(&mut self) -> Result<(), railgun::provider::RailgunProviderError> {
-        self.0.sync().await
-    }
-
-    pub async fn balance(&mut self, address: railgun::account::address::RailgunAddress) -> Vec<railgun::provider::BalanceEntry> {
-        self.0.balance(address).await
-    }
-
-    pub fn shield(&self) -> railgun::transact::ShieldBuilder {
-        self.0.shield()
-    }
-
-    pub fn transact(&self) -> railgun::transact::TransactionBuilder {
-        self.0.transact()
-    }
-
-    pub async fn build<R: rand::Rng>(&mut self, builder: railgun::transact::TransactionBuilder, rng: &mut R) -> Result<railgun::transact::proved_transaction::ProvedTx, railgun::provider::RailgunProviderError> {
-        self.0.build(builder, rng).await
-    }
-
-    pub async fn register(&mut self, signer: Arc<dyn RailgunSigner>) -> Result<(), railgun::provider::RailgunProviderError> {
-        self.0.register(signer).await
-    }
-}
-
 /// Serialized payload for reconstructable private operations.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PrivateOpPayload {
@@ -290,7 +260,7 @@ pub struct PrivateIntent {
 
 /// The Railgun plugin implementation.
 pub struct RailgunPlugin {
-    pub provider: Arc<Mutex<SendSyncProvider>>,
+    pub provider: Arc<Mutex<RailgunProvider>>,
     pub signer: Arc<PrivateKeySigner>,
     pub host_provider: Arc<dyn EthereumProvider>,
 }
@@ -551,7 +521,7 @@ impl PrivacyPluginFactory for RailgunPluginFactory {
             .map_err(|e| KohakuError::Other(Box::new(e)))?;
 
         Ok(RailgunPlugin {
-            provider: Arc::new(Mutex::new(SendSyncProvider(provider))),
+            provider: Arc::new(Mutex::new(provider)),
             signer,
             host_provider: arc_provider,
         })
