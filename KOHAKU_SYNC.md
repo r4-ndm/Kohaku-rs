@@ -6,9 +6,19 @@ Living document: **official Kohaku module → kohaku-rs crate**. Update on every
 
 | Source | Branch | Last reviewed commit | Date |
 |--------|--------|----------------------|------|
-| [ethereum/kohaku](https://github.com/ethereum/kohaku) | `master` | _set on first weekly sync_ | — |
-| [kassandraoftroy/kohaku-cli](https://github.com/kassandraoftroy/kohaku-cli) | `main` | _set on first weekly sync_ | — |
+| [ethereum/kohaku](https://github.com/ethereum/kohaku) | `master` | `8d5a29e3fba806431c881f72c0bc9accb0066ace` | 2026-08-16 |
+| [kassandraoftroy/kohaku-cli](https://github.com/kassandraoftroy/kohaku-cli) | `main` | `f95b66990fa0f4606b47c85093da8b960c69b9a3` | 2026-08-16 |
 | [ethereum/kohaku-extension](https://github.com/ethereum/kohaku-extension) | `main` | _optional_ | — |
+
+### How Rust deps track `ethereum/kohaku`
+
+`kohaku-railgun` consumes upstream as **pinned git `rev` deps**, not submodule path-deps:
+
+- `railgun` → `https://github.com/ethereum/kohaku.git`, `rev = 8d5a29e…`
+- `eip-1193-provider` → same repo, same `rev`
+- `kohaku-db` → same repo, same `rev`
+
+To update: bump the `rev` in `crates/kohaku-railgun/Cargo.toml`, run `cargo check --workspace` + `cargo test --workspace`, then update this table.
 
 npm versions (from kohaku-cli lockfile baseline):
 
@@ -121,12 +131,13 @@ Still **watch** extension PRs for new SDK usage patterns.
 
 ## Weekly diff workflow
 
-1. `git fetch` pinned clones of `ethereum/kohaku` and `kohaku-cli`.  
-2. `git log LAST_PIN..HEAD --oneline` for each.  
-3. For each commit touching mapped paths above, add a row to `sync-reports/YYYY-MM-DD.md`.  
-4. If `packages/plugins/src/base.ts` or `Host` types change, open a **breaking** issue for `kohaku-core`.  
-5. If `@kohaku-eth/railgun` version bumps in kohaku-cli, schedule `kohaku-railgun` integration test.  
-6. Update pin table at top of this file.
+1. Bump the `rev` in `crates/kohaku-railgun/Cargo.toml` and re-verify (`cargo check --workspace`, `cargo test --workspace`) if `ethereum/kohaku` moved.
+2. `git fetch` pinned clones of `ethereum/kohaku` and `kohaku-cli`.
+3. `git log LAST_PIN..HEAD --oneline` for each.
+4. For each commit touching mapped paths above, add a row to `sync-reports/YYYY-MM-DD.md`.
+5. If `packages/plugins/src/base.ts` or `Host` types change, open a **breaking** issue for `kohaku-core`.
+6. If `@kohaku-eth/railgun` version bumps in kohaku-cli, schedule `kohaku-railgun` integration test.
+7. Update pin table at top of this file.
 
 ### Automation (recommended)
 
