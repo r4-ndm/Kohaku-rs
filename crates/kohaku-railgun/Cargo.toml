@@ -11,6 +11,9 @@ authors.workspace = true
 keywords = ["ethereum", "privacy", "railgun", "zk"]
 categories.workspace = true
 
+[lints]
+workspace = true
+
 [dependencies]
 kohaku-core = { workspace = true }
 async-trait = { workspace = true }
@@ -27,3 +30,6 @@ kohaku-db = { git = "https://github.com/ethereum/kohaku.git", rev = "8d5a29e3fba
 
 # Track upstream EF Rust implementation (not yet published to crates.io).
 railgun = { git = "https://github.com/ethereum/kohaku.git", rev = "8d5a29e3fba806431c881f72c0bc9accb0066ace" }
+
+[dev-dependencies]
+reqwest = { workspace = true, features = ["json", "rustls"] }
