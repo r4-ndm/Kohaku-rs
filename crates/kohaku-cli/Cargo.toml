@@ -15,6 +15,9 @@ categories.workspace = true
 name = "kohaku"
 path = "src/main.rs"
 
+[lints]
+workspace = true
+
 [dependencies]
 kohaku-core = { workspace = true }
 kohaku-stealth = { workspace = true }

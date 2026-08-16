@@ -11,6 +11,9 @@ authors.workspace = true
 keywords = ["ethereum", "privacy", "stealth", "erc-5564"]
 categories.workspace = true
 
+[lints]
+workspace = true
+
 [dependencies]
 kohaku-core = { workspace = true }
 thiserror = { workspace = true }

@@ -11,6 +11,9 @@ authors.workspace = true
 keywords = ["ethereum", "privacy", "p2p", "mempool"]
 categories.workspace = true
 
+[lints]
+workspace = true
+
 [dependencies]
 kohaku-core = { workspace = true }
 async-trait = { workspace = true }
