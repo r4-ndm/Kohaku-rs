@@ -24,14 +24,13 @@ use railgun::account::signer::{PrivateKeySigner, RailgunSigner};
 use railgun::chain_config::ChainConfig;
 use railgun::crypto::keys::{HexKey, SpendingKey, ViewingKey};
 use railgun::caip::AssetId as RailgunAssetId;
-use railgun::database::Database as RailgunDatabase;
-use railgun::database::DatabaseError as RailgunDatabaseError;
+use kohaku_db::{Database as RailgunDatabase, DatabaseError as RailgunDatabaseError};
 
 use eip_1193_provider::provider::{Eip1193Provider, Eip1193Error, RawLog};
 use rand::SeedableRng;
 use rand::rngs::StdRng;
 
-// Compile-time regression guard: the `send-sync` fork's `MaybeSend` bounds make
+// Compile-time regression guard: upstream's `MaybeSend` bounds make
 // `RailgunProvider` thread-safe on native. If a future upstream sync drops those
 // bounds, this fails to compile and the integration needs attention.
 #[cfg(not(target_arch = "wasm32"))]
