@@ -11,7 +11,7 @@ members = [
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-rust-version = "1.75"
+rust-version = "1.85"
 license = "MIT"
 repository = "https://github.com/r4-ndm/Kohaku-rs"
 homepage = "https://github.com/r4-ndm/Kohaku-rs"
@@ -78,14 +78,6 @@ wasm-bindgen-futures = "0.4"
 wasmer = { version = "6.1", default-features = false }
 web-time = { version = "1.1" }
 
-common = { path = ".upstream-cache/kohaku/crates/common" }
-crypto = { path = ".upstream-cache/kohaku/crates/crypto" }
-eip-1193-provider = { path = ".upstream-cache/kohaku/crates/eip-1193-provider" }
-poseidon-rust = { path = ".upstream-cache/kohaku/crates/poseidon-rust" }
-railgun = { path = ".upstream-cache/kohaku/crates/railgun" }
-userop-kit = { path = ".upstream-cache/kohaku/crates/userop-kit" }
-userop-kit-ts = { path = ".upstream-cache/kohaku/crates/userop-kit-ts" }
-
 kohaku-core = { path = "crates/kohaku-core", version = "0.1.0" }
 kohaku-stealth = { path = "crates/kohaku-stealth", version = "0.1.0" }
 kohaku-railgun = { path = "crates/kohaku-railgun", version = "0.1.0" }
@@ -101,13 +93,3 @@ pedantic = "warn"
 [patch.crates-io]
 ruint = { git = "https://github.com/Robert-MacWha/ruint" }                                        # Adds ark-fr-06 support
 ark-circom = { git = "https://github.com/Robert-MacWha/circom-compat", branch = "release/0.6.0" } # Adds opt-in parallel feature flag.  Without parallel hangs indefinitely in wasm.
-
-[patch."https://github.com/r4-ndm/kohaku.git"]
-railgun = { path = ".upstream-cache/kohaku/crates/railgun" }
-common = { path = ".upstream-cache/kohaku/crates/common" }
-crypto = { path = ".upstream-cache/kohaku/crates/crypto" }
-eip-1193-provider = { path = ".upstream-cache/kohaku/crates/eip-1193-provider" }
-userop-kit = { path = ".upstream-cache/kohaku/crates/userop-kit" }
-
-
-
