@@ -102,7 +102,10 @@ impl EthereumProvider for HttpProvider {
         if let Some(err) = val.get("error") {
             return Err(KohakuError::Provider(err.to_string()));
         }
-        Ok(val.get("result").cloned().unwrap_or(serde_json::Value::Null))
+        Ok(val
+            .get("result")
+            .cloned()
+            .unwrap_or(serde_json::Value::Null))
     }
 }
 
@@ -118,8 +121,9 @@ impl Network for StubNetwork {
 }
 
 async fn live_plugin() -> KohakuResult<kohaku_railgun::RailgunPlugin> {
-    let rpc_url = std::env::var("KOHaku_RPC_URL")
-        .map_err(|_| KohakuError::Other("KOHaku_RPC_URL must be set to a live RPC endpoint".into()))?;
+    let rpc_url = std::env::var("KOHaku_RPC_URL").map_err(|_| {
+        KohakuError::Other("KOHaku_RPC_URL must be set to a live RPC endpoint".into())
+    })?;
     let spending = std::env::var("KOHaku_SPENDING_KEY")
         .map_err(|_| KohakuError::Other("KOHaku_SPENDING_KEY must be set (64 hex chars)".into()))?;
     let viewing = std::env::var("KOHaku_VIEWING_KEY")

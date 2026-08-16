@@ -24,12 +24,28 @@ pub struct FetchResponse {
 
 /// Key-value storage scoped to a plugin instance (mirrors Kohaku `Storage`).
 pub trait Storage: Send + Sync {
+    /// Stores `value` under `key`.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the underlying store rejects the write.
     fn set(&self, key: &str, value: &str) -> KohakuResult<()>;
+
+    /// Reads the value stored under `key`, if any.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if the underlying store rejects the read.
     fn get(&self, key: &str) -> KohakuResult<Option<String>>;
 }
 
 /// HD derivation from the wallet mnemonic (mirrors Kohaku `Keystore`).
 pub trait Keystore: Send + Sync {
+    /// Derives the key material at the given BIP-32 `path`.
+    ///
+    /// # Errors
+    ///
+    /// Returns an error if derivation fails (e.g. an invalid path).
     fn derive_at(&self, path: &str) -> KohakuResult<Hex>;
 }
 

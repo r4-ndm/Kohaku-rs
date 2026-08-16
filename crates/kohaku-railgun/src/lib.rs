@@ -142,10 +142,8 @@ impl Eip1193Provider for ProviderAdapter {
                 if let Some(s) = bn_val.as_str() {
                     Some(u64::from_str_radix(s.trim_start_matches("0x"), 16)
                         .map_err(|e| Eip1193Error::Decode(e.to_string()))?)
-                } else if let Some(n) = bn_val.as_u64() {
-                    Some(n)
                 } else {
-                    None
+                    bn_val.as_u64()
                 }
             } else {
                 None
@@ -155,10 +153,8 @@ impl Eip1193Provider for ProviderAdapter {
                 if let Some(s) = bt_val.as_str() {
                     Some(u64::from_str_radix(s.trim_start_matches("0x"), 16)
                         .map_err(|e| Eip1193Error::Decode(e.to_string()))?)
-                } else if let Some(n) = bt_val.as_u64() {
-                    Some(n)
                 } else {
-                    None
+                    bt_val.as_u64()
                 }
             } else {
                 None
@@ -225,7 +221,7 @@ impl Eip1193Provider for ProviderAdapter {
         block: Option<u64>,
     ) -> Result<u64, Eip1193Error> {
         let block_str = match block {
-            Some(b) => format!("0x{:x}", b),
+            Some(b) => format!("0x{b:x}"),
             None => "latest".to_string(),
         };
         let res = self.provider.request("eth_getTransactionCount", json!([address, block_str])).await
@@ -388,7 +384,7 @@ impl PrivacyPlugin for RailgunPlugin {
             intents.push(PrivateIntent {
                 asset: asset.asset.clone(),
                 amount: asset.amount,
-                to_railgun_address: "".to_string(),
+                to_railgun_address: String::new(),
             });
         }
         let payload = PrivateOpPayload {
@@ -502,7 +498,7 @@ impl PrivacyPluginFactory for RailgunPluginFactory {
 
         let storage_db = StorageDatabase {
             storage: Arc::new(host.storage),
-            prefix: format!("railgun:{}", chain_id_val),
+            prefix: format!("railgun:{chain_id_val}"),
         };
 
         let mut builder = RailgunBuilder::new(chain_config, Arc::new(provider_adapter));

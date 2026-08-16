@@ -7,6 +7,10 @@ use crate::types::{
 };
 
 /// Which transaction kinds a plugin supports (mirrors Kohaku plugin `features`).
+///
+/// A flat set of bools intentionally mirrors the upstream plugin `features`
+/// shape, keeping each operation flag self-describing.
+#[allow(clippy::struct_excessive_bools)]
 #[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
 pub struct TxFeatures {
     pub prepare_shield: bool,

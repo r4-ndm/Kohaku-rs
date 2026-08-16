@@ -25,6 +25,10 @@ pub struct StealthMetaAddress {
 }
 
 /// Generate a fresh stealth meta-address (recipient registration).
+///
+/// # Errors
+///
+/// Never fails today; returns `Ok` for API compatibility with the rest of the SDK.
 pub fn generate_meta_address() -> KohakuResult<StealthMetaAddress> {
     let (stealth_meta_address, spending_key, viewing_key) = generate_stealth_meta_address();
     Ok(StealthMetaAddress {
@@ -35,7 +39,13 @@ pub fn generate_meta_address() -> KohakuResult<StealthMetaAddress> {
 }
 
 fn bytes_to_hex(bytes: &[u8]) -> String {
-    bytes.iter().map(|b| format!("{b:02x}")).collect()
+    use std::fmt::Write as _;
+
+    let mut out = String::with_capacity(bytes.len() * 2);
+    for byte in bytes {
+        let _ = write!(out, "{byte:02x}");
+    }
+    out
 }
 
 #[cfg(test)]
